@@ -7,16 +7,22 @@ class User {
     }
 
     login() {
-        const body = this.body;
-        const { id, pw } = UserStorage.getUsersInfo(body.id);
+        const client = this.body;
+        const { id, pw } = UserStorage.getUsersInfo(client.id);
         
         if (id) {
-            if (id === body.id && pw === body.pw) {
+            if (id === client.id && pw === client.pw) {
                 return { success : true };
             }
             return { success : false, msg: "비번 틀림"};
         }
         return { success : false, msg: "아이디가 존재하지 않음"};
+    }
+
+    register() {
+        const client = this.body;
+        const response = UserStorage.save(client);
+        return response;
     }
 }
 
